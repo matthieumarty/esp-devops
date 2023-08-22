@@ -1,0 +1,13 @@
+stages:
+  - notify
+
+notify:
+  stage: notify
+  image: alpine
+  before_script:
+    - apk add curl
+  script:
+    - >
+      curl -X POST -H "Content-Type: application/json" -d '{
+        "content": "🟢  '"$CI_PROJECT_NAME"' on branch '"$CI_COMMIT_REF_NAME"' : Pipeline passed !"
+      }' "$DISCORD_WEBHOOK_URL"
